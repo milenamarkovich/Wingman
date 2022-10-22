@@ -11,18 +11,18 @@ The software components of this project include the mobile app, which allows the
 3. Make sure to pull any changes via the Source Control git extension of your IDE
 4. In order to run our app we'll be using Expo Go - since the app will be cross-platform it should be able to function on any mobile OS
   In order to demo the app via Expo Go, follow these steps:
-    Install the Expo Go app
-    Log-in or create an account
-    Open a new terminal in your project folder (either in IDE or using Command Prompt/Powershell)
-    Follow the steps outlined here: https://reactnative.dev/docs/environment-setup
-    run 
-      ```
-      npx create-app-expo Wingman-App
-      ```
-    Note: make sure you have Javascript dependencies and npm modules installed prior to running this (otherwise you'll get errors)
-    If you're not already in the project folder, change directories: `cd Wingman-App`
-    Finally, start your project using
-      ```
-      npm start
-      ```
-    You will see a QR code in the terminal output - you can scan this code either using your camera (for iOS phones) or the Expo app
+    * Install the Expo Go app
+    * Log-in or create an account
+    * Open a new terminal in your project folder (either in IDE or using Command Prompt/Powershell)
+    * Follow the steps outlined here: https://reactnative.dev/docs/environment-setup
+      * run 
+        ```
+        npx create-app-expo Wingman-App
+        ```
+      Note: make sure you have Javascript dependencies and npm modules installed prior to running this (otherwise you'll get errors)
+      * If you're not already in the project folder, change directories: `cd Wingman-App`
+      * Finally, start your project using
+        ```
+        npm start
+        ```
+      * You will see a QR code in the terminal output - you can scan this code either using your camera (for iOS phones) or the Expo app
