@@ -15,13 +15,13 @@ The software components of this project include the mobile app, which allows the
     * Log-in or create an account
     * Open a new terminal in your project folder (either in IDE or using Command Prompt/Powershell)
     * Follow the steps outlined here: https://reactnative.dev/docs/environment-setup
-      * run 
+      * Run: 
         ```
         npx create-app-expo Wingman-App
         ```
       Note: make sure you have Javascript dependencies and npm modules installed prior to running this (otherwise you'll get errors)
       * If you're not already in the project folder, change directories: `cd Wingman-App`
-      * Finally, start your project using
+      * Finally, start your project using:
         ```
         npm start
         ```
