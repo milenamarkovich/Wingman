@@ -11,12 +11,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SetConfigScreen from './pages/SetConfig';
-import SequencesScreen from './pages/Sequences';
-import PlayersScreen from './pages/Players';
-import MediaScreen from './pages/Media';
-import SettingsScreen from './pages/Settings';
-import HomeScreen from './pages/Home';
+import SetConfigScreen from './components/SetConfig';
+import SequencesScreen from './components/Sequences';
+import PlayersScreen from './components/Players';
+import MediaScreen from './components/Media';
+import SettingsScreen from './components/Settings';
+import HomeScreen from './components/Home';
 
 const Stack = createNativeStackNavigator();
 
