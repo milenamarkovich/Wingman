@@ -12,18 +12,20 @@ ma = Marshmallow(app)
 
 class Configurations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    yaw = db.Column(db.Integer())
-    delta_x = db.Column(db.Integer())
-    delta_y = db.Column(db.Integer())
+    yaw = db.Column(db.types.Float(precision=1,asdecimal=True))
+    delta_x = db.Column(db.types.Float(precision=1,asdecimal=True))
+    delta_y = db.Column(db.types.Float(precision=1,asdecimal=True))
+    title = db.Column(db.String(100))
 
-    def __init__(self, yaw, delta_x, delta_y):
+    def __init__(self, yaw, delta_x, delta_y, title):
+        self.title = title
         self.yaw = yaw
         self.delta_x = delta_x
         self.delta_y = delta_y
 
 class ConfigurationSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'yaw', 'delta_x', 'delta_y')
+        fields = ('id', 'title', 'yaw', 'delta_x', 'delta_y')
 
 config_schema = ConfigurationSchema()
 configs_schema = ConfigurationSchema(many=True)
@@ -41,23 +43,27 @@ def post_details(id):
 
 @app.route('/add', methods = ['POST'])
 def add_config():
+    title = request.json['title']
     yaw = request.json['yaw']
     delta_x = request.json['delta_x']
     delta_y = request.json['delta_y']
 
-    configs = Configurations(yaw, delta_x, delta_y)
-    db.session.add(configs)
+    config = Configurations(yaw, delta_x, delta_y, title)
+
+    db.session.add(config)
     db.session.commit()
-    return config_schema.jsonify(configs)
+    return config_schema.jsonify(config)
 
 @app.route('/update/<id>/', methods = ['PUT'])
 def update_config(id):
     config = Configurations.query.get(id)
 
+    title = request.json['title']
     yaw = request.json['yaw']
     delta_x = request.json['delta_x']
     delta_y = request.json['delta_y']
 
+    config.title = title
     config.yaw = yaw
     config.delta_x = delta_x
     config.delta_y = delta_y

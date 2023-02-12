@@ -17,6 +17,7 @@ import PlayersScreen from './components/Players';
 import MediaScreen from './components/Media';
 import SettingsScreen from './components/Settings';
 import HomeScreen from './components/Home';
+import Create from './components/CreateConfig';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ function App() {
         <Stack.Screen name="Players" component={PlayersScreen} />
         <Stack.Screen name="Media" component={MediaScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="CreateConfig" component={Create} />
       </Stack.Navigator>
     </NavigationContainer>
   );

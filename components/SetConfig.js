@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,25 +7,32 @@ import {
   TextInput,
   Alert,
   Button,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { Card, FAB } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassConfig from './ClassConfig';
 import styles from '../styles/styles';
+import Create from './CreateConfig';
 
-export default function SetConfigScreen() {
-  
-  const data = [
-    {id: 1, yaw: '5', delta_x: '2', delta_y: '3'},
-    {id: 2, yaw: '6', delta_x: '3', delta_y: '5'},
-    {id: 3, yaw: '7', delta_x: '4', delta_y: '6'}
-  ]
+export default function SetConfigScreen(props) {
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetch('http://10.0.0.179:5000/get', {
+      method:'GET'
+    })
+    .then(resp => resp.json())
+    .then(config => {
+      setData(config)
+    })
+  }, [])
 
   const renderData = (item) => {
     return (
       <Card style = {styles.cardStyle}>
+        <Text style={styles.nameText}>{item.title}</Text>
         <Text>{item.yaw}</Text>
         <Text>{item.delta_x}</Text>
         <Text>{item.delta_y}</Text>
@@ -47,7 +54,7 @@ export default function SetConfigScreen() {
       small={false}
       icon="plus"
       theme = {{colors:{accent:"green"}}}
-      onPress = {() => console.log("Pressed")}
+      onPress = {() => props.navigation.navigate('CreateConfig')}
       />
     </View>
   );
