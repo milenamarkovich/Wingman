@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+import logging
 
 app = Flask(__name__)
 
@@ -49,10 +50,14 @@ def add_config():
     delta_y = request.json['delta_y']
 
     config = Configurations(yaw, delta_x, delta_y, title)
-
+    
     db.session.add(config)
     db.session.commit()
-    return config_schema.jsonify(config)
+    response = config_schema.dump(config)
+    
+    print(response)
+    return response
+    
 
 @app.route('/update/<id>/', methods = ['PUT'])
 def update_config(id):
@@ -80,5 +85,5 @@ def config_delete(id):
     return config_schema.jsonify(config)
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0', port = 5000, debug=True)
+    app.run(host = '10.0.0.179', port = 5000)
 

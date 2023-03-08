@@ -8,33 +8,45 @@ import {
   Alert,
   Button
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SetConfigScreen from './components/SetConfig';
 import SequencesScreen from './components/Sequences';
 import PlayersScreen from './components/Players';
 import MediaScreen from './components/Media';
-import SettingsScreen from './components/Settings';
 import HomeScreen from './components/Home';
 import Create from './components/CreateConfig';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
+
+function CreateStackScreen() {
+  return(
+    <Stack.Navigator initialRouteName='SetConfig'>
+      <Stack.Screen name="SetConfig" component={SetConfigScreen} />
+      <Stack.Screen name="Create" component={Create} />
+    </Stack.Navigator>
+  )
+}
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="SetConfig" component={SetConfigScreen} />
-        <Stack.Screen name="Sequences" component={SequencesScreen} />
-        <Stack.Screen name="Players" component={PlayersScreen} />
-        <Stack.Screen name="Media" component={MediaScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
-        <Stack.Screen name="CreateConfig" component={Create} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator initialRouteName='Home'>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Players" component={PlayersScreen} />
+      <Tab.Screen name="Sequences" component={SequencesScreen} />
+      <Tab.Screen name="SetConfig" component={CreateStackScreen} />
+    </Tab.Navigator>
   );
 }
 
-export default App;
+export default() => {
+  return(
+    <NavigationContainer>
+      <App />
+    </NavigationContainer>
+  )
+}

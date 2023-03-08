@@ -10,24 +10,34 @@ import {
   FlatList,
 } from 'react-native';
 import { Card, FAB } from 'react-native-paper';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ClassConfig from './ClassConfig';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import styles from '../styles/styles';
 import Create from './CreateConfig';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function SetConfigScreen(props) {
+  
+  const navigationRef = useNavigationContainerRef();
 
   const [data, setData] = useState([])
+  const [loading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  const loadData = () => {
     fetch('http://10.0.0.179:5000/get', {
       method:'GET'
     })
     .then(resp => resp.json())
     .then(config => {
       setData(config)
+      setIsLoading(false)
     })
+    .catch(error => console.log(error) )
+  }
+
+  useEffect(() => {
+    loadData()
   }, [])
+
 
   const renderData = (item) => {
     return (
@@ -47,14 +57,17 @@ export default function SetConfigScreen(props) {
       renderItem = {({item}) => {
         return renderData(item)
       }}
+      onRefresh = {() => loadData()}
+      refreshing = {loading}
       keyExtractor = {item => `${item.id}`}
       />
+      
       <FAB
       style = {styles.fab}
       small={false}
       icon="plus"
       theme = {{colors:{accent:"green"}}}
-      onPress = {() => props.navigation.navigate('CreateConfig')}
+      onPress = {() => props.navigation.navigate('Create')}
       />
     </View>
   );

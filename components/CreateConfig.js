@@ -9,177 +9,169 @@ function Create(props) {
     const yaw_list = [
         {
           label: "0",
-          value: 0,
+          value: '0',
         },
         {
           label: "15",
-          value: 15,
+          value: '15',
         },
         {
           label: "30",
-          value: 30,
+          value: '30',
         },
         {
           label: "45",
-          value: 45,
+          value: '45',
         },
         {
           label: "60",
-          value: 60,
+          value: '60',
         },
         {
           label: "75",
-          value: 75,
+          value: '75',
         },
         {
           label: "90",
-          value: 90,
+          value: '90',
         },
         {
           label: "105",
-          value: 105,
+          value: '105',
         },
         {
           label: "120",
-          value: 120,
+          value: '120',
         },
         {
           label: "135",
-          value: 135,
+          value: '135',
         },
       ];
     
       const delta_x_list = [
         {
           label: "9",
-          value: 9,
+          value: '9',
         },
         {
           label: "10",
-          value: 10,
+          value: '10',
         },
         {
           label: "11",
-          value: 11,
+          value: '11',
         },
         {
           label: "12",
-          value: 12,
+          value: '12',
         },
         {
           label: "13",
-          value: 13,
+          value: '13',
         },
         {
           label: "14",
-          value: 14,
+          value: '14',
         },
         {
           label: "15",
-          value: 15,
+          value: '15',
         },
         {
           label: "16",
-          value: 16,
+          value: '16',
         },
         {
           label: "17",
-          value: 17,
+          value: '17',
         },
         {
           label: "18",
-          value: 18,
+          value: '18',
         },
       ];
     
       const delta_y_list = [
         {
           label: "1.75",
-          value: 1.75,
+          value: '1.75',
         },
         {
           label: "2.00",
-          value: 2.00,
+          value: '2.00',
         },
         {
           label: "2.25",
-          value: 2.25,
+          value: '2.25',
         },
         {
           label: "2.50",
-          value: 2.50,
+          value: '2.50',
         },
         {
           label: "2.75",
-          value: 2.75,
+          value: '2.75',
         },
         {
           label: "3.00",
-          value: 3.00,
+          value: '3.00',
         },
         {
           label: "3.25",
-          value: 3.25,
+          value: '3.25',
         },
         {
           label: "3.50",
-          value: 3.50,
+          value: '3.50',
         },
         {
           label: "3.75",
-          value: 3.75,
+          value: '3.75',
         },
         {
           label: "4.00",
-          value: 4.00,
+          value: '4.00',
         },
         {
           label: "4.25",
-          value: 4.25,
+          value: '4.25',
         },
         {
           label: "4.50",
-          value: 4.50,
+          value: '4.50',
         },
         {
           label: "4.75",
-          value: 4.75,
+          value: '4.75',
         },
       ];
 
     const [title, setTitle] = useState("");
-    const [yaw, setYaw] = useState();
-    const [delta_x, setDeltaX] = useState();
-    const [delta_y, setDeltaY] = useState();
+    const [yaw, setYaw] = useState("");
+    const [delta_x, setDeltaX] = useState("");
+    const [delta_y, setDeltaY] = useState(""); 
 
-    const insertData = () => {
-      fetch('http://10.0.0.179:5000/add', {
-        method: 'POST', 
-        Accept: 'application/json',
+    const insertData = (props) => {
+      fetch("http://10.0.0.179:5000/add", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json, utf8mb4_general_ci',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Content-Type': 'application/json; charset="utf-8"'
         },
-        body: JSON.stringify({
-          title: title,
-          yaw: yaw,
-          delta_x: delta_x,
-          delta_y: delta_y,
-        })
+        body: JSON.stringify({title: title, yaw: yaw, delta_x: delta_x, delta_y: delta_y})
       })
-      .post('http://10.0.0.179:5000/add')
-      .then((response = response.json()) => {
-        console.log(JSON.stringify(response));
-        return response.json;
+      .then(resp => resp.json())
+      .then(data => {
+        console.log('Success: ', data);
+        props.navigation.navigate("SetConfig");
       })
-      .then(response => {
-        props.navigation.navigate('SetConfig');
+      .catch(error => {
+        console.log(JSON.stringify({title: title, yaw: yaw, delta_x: delta_x, delta_y: delta_y}))
+        console.log(error)
       })
-      .catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-        throw error;
-        });
     }
+
 
     return (
         <View style={styles.container}>
@@ -193,11 +185,29 @@ function Create(props) {
           onChangeText = {text => setTitle(text)}
           />
 
-          <Dropdown
+          <TextInput style = {styles.inputStyle}
+          label = "Please Enter Yaw"
+          value = {yaw}
+          mode = "outlined"
+          onChangeText = {text => setYaw(text)}
+          />
+
+          <TextInput style = {styles.inputStyle}
+          label = "Please Enter Horizontal Displacement"
+          value = {delta_x}
+          mode = "outlined"
+          onChangeText = {text => setDeltaX(text)}
+          />
+
+          <TextInput style = {styles.inputStyle}
+          label = "Please Enter Vertical Displacement"
+          value = {delta_y}
+          mode = "outlined"
+          onChangeText = {text => setDeltaY(text)}
+          />
+
+          {/*<Dropdown
           style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={yaw_list}
           maxHeight={300}
@@ -205,8 +215,8 @@ function Create(props) {
           valueField="value"
           placeholder='Yaw Axis (deg)'
           value={yaw}
-          onChange={item => {
-              setYaw(item.yaw);
+          onSelectItem={(item) => {
+            console.log(item);
           }}
           />
 
@@ -222,9 +232,7 @@ function Create(props) {
           valueField="value"
           placeholder='Horizontal Displacement (m)'
           value={delta_x}
-          onChange={item => {
-              setDeltaX(item.delta_x);
-          }}
+          onChangeText={text => setDeltaX(text)}
           />
 
           <Dropdown
@@ -239,15 +247,13 @@ function Create(props) {
           valueField="value"
           placeholder='Vertical Displacement (m)'
           value={delta_y}
-          onChange={item => {
-              setDeltaY(item.delta_y);
-          }}
-          />
+          onChangeText={text => setDeltaY(text)}
+    />*/}
           <Button 
           style = {{margin:10}}
           icon = "pencil"
           mode = "contained"
-          onPress = {() => insertData()}
+          onPress = {() => insertData(props)}
           > Insert Configuration </Button>
         </View>
     )
