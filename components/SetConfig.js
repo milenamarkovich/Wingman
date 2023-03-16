@@ -12,7 +12,7 @@ import {
 import { Card, FAB } from 'react-native-paper';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import styles from '../styles/styles';
-import Create from './CreateConfig';
+import Create from './Configs/Create';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export default function SetConfigScreen(props) {
@@ -38,14 +38,14 @@ export default function SetConfigScreen(props) {
     loadData()
   }, [])
 
+  const clickedItem = (data) => {
+    props.navigation.navigate('Details', {data: data})
+  }
 
   const renderData = (item) => {
     return (
-      <Card style = {styles.cardStyle}>
+      <Card style = {styles.cardStyle} onPress = {() => clickedItem(item)}>
         <Text style={styles.nameText}>{item.title}</Text>
-        <Text>{item.yaw}</Text>
-        <Text>{item.delta_x}</Text>
-        <Text>{item.delta_y}</Text>
       </Card>
     )
   }
@@ -66,7 +66,7 @@ export default function SetConfigScreen(props) {
       style = {styles.fab}
       small={false}
       icon="plus"
-      theme = {{colors:{accent:"green"}}}
+      theme = {{color: "#FAC623"}}
       onPress = {() => props.navigation.navigate('Create')}
       />
     </View>

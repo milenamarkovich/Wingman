@@ -26,7 +26,7 @@ export default StyleSheet.create({
         position: 'absolute',
         margin: 16,
         right: 0,
-        bottom: 0
+        bottom: 0,
     },
     nameText: {
         fontSize: 16,
