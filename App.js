@@ -39,11 +39,6 @@ function App() {
   return (
     <Tab.Navigator initialRouteName='Home'
         screenOptions={({ route }) => ({
-          topBarOptions: {
-            labelStyle: {
-              fontSize: 5,
-            }
-          },
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -51,7 +46,7 @@ function App() {
               iconName = focused
                 ? 'home'
                 : 'home-outline';
-            } else if (route.name === 'Sequences') {
+            } else if (route.name === 'Practice') {
               iconName = focused ? 'stopwatch' : 'stopwatch-outline';
             }
             else if (route.name === 'Sets') {
@@ -62,14 +57,14 @@ function App() {
             }
 
             // You can return any component that you like here!
-            return <Ionicons style={{alignItems: "center" }} name={iconName} size={25} color={color} />;
+            return <Ionicons style={{alignItems: "center"}} name={iconName} size={25} color={color} />;
           },
           tabBarActiveTintColor: '#FAC623',
           tabBarInactiveTintColor: 'gray',
         })}
       >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Sequences" component={SequencesScreen} />
+      <Tab.Screen name="Practice" component={SequencesScreen} />
       <Tab.Screen name="Sets" component={CreateStackScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
