@@ -14,7 +14,7 @@ function Edit(props) {
     const [delta_y, setDeltaY] = useState(data.delta_y); 
 
     const updateData = (props) => {
-      fetch(`http://10.0.0.179:5000/update/${data.id}/`, {
+      fetch(`http://10.43.216.33:5000/update/${data.id}/`, {
         method: "PUT",
         headers: {
           'Accept': 'application/json',

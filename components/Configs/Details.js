@@ -9,14 +9,14 @@ function Details(props) {
     const data = props.route.params.data;
 
     const deleteData = (data) => {
-        fetch(`http://10.0.0.179:5000/delete/${data.id}/`, {
+        fetch(`http://10.43.216.33:5000/delete/${data.id}/`, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json; charset="utf-8"'
         },
       })
-      .then(data => {
+      .then(config => {
         props.navigation.navigate("SetsScreen");
       })
       .catch(error => console.log(error))

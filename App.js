@@ -30,7 +30,7 @@ function CreateStackScreen() {
       <Stack.Screen name="SetsScreen" component={SetConfigScreen} />
       <Stack.Screen name="Create" component={Create} />
       <Stack.Screen name="Details" component={Details} />
-      <Stack.Screen name="Edit" component={Edit} />
+      <Stack.Screen name="Edit" component={Edit} />     
     </Stack.Navigator>
   )
 }

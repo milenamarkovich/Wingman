@@ -2,6 +2,10 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import logging
+import socket
+import json
+import requests
+import time
 
 app = Flask(__name__)
 
@@ -84,6 +88,56 @@ def config_delete(id):
 
     return config_schema.jsonify(config)
 
+@app.route('/launch/<id>/', methods = ['GET'])
+def launch(id):
+    #--------------USE CLIENT_TEST.PY IN RPI CODE----------------#
+    #config = config_schema.jsonify(Configurations.query.get(id))
+    #print("config: ", config)
+
+    # Create a TCP/IP socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Bind the socket to the port
+    server_address = ('10.43.216.33', 10000)
+    print('Starting up on {} port {}'.format(*server_address))
+    s.bind(server_address)
+
+    # Listen for incoming connections
+    s.listen(1)
+
+    #message = json.dumps({'id': 1, 'title': 'hello'})
+
+    message = requests.get('http://10.43.216.33:5000/get/' + str(id))
+    response = json.loads(message.text)
+
+    data = json.dumps(response)
+
+    while True:
+        # Wait for a connection
+        print('waiting for a connection')
+        print(id)
+        connection, client_address = s.accept()
+        try:
+            print('connection from', client_address)
+            connection.send(bytes(data, encoding="utf-8"))
+
+            data = connection.recv(1024)
+            print('received {!r}'.format(data))
+            
+            if data != None:
+                print('sending data back to the client')
+                connection.sendall(data)
+            else:
+                print('no data from', client_address)
+                break
+
+        finally:
+            # Clean up the connection
+            print("Closing current connection")
+            connection.close()
+            s.close()
+    
+    
 if __name__ == "__main__":
-    app.run(host = '10.0.0.179', port = 5000)
+    app.run(host = '0.0.0.0', port = 5000)
 

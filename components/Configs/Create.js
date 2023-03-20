@@ -12,7 +12,7 @@ function Create(props) {
     const [delta_y, setDeltaY] = useState(""); 
 
     const insertData = (props) => {
-      fetch("http://10.0.0.179:5000/add", {
+      fetch("http://10.43.216.33:5000/add", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
