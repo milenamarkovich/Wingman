@@ -26,7 +26,8 @@ const Stack = createStackNavigator();
 
 function CreateStackScreen() {
   return(
-    <Stack.Navigator initialRouteName='SetsScreen'>
+    <Stack.Navigator initialRouteName='SetsScreen'
+      screenOptions={{headerShown: false}}>
       <Stack.Screen name="SetsScreen" component={SetConfigScreen} />
       <Stack.Screen name="Create" component={Create} />
       <Stack.Screen name="Details" component={Details} />
@@ -61,6 +62,8 @@ function App() {
           },
           tabBarActiveTintColor: '#FAC623',
           tabBarInactiveTintColor: 'gray',
+          headerShown: false,
+          cardStyle: { backgroundColor: '#fff' }
         })}
       >
       <Tab.Screen name="Home" component={HomeScreen} />

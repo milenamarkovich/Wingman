@@ -23,7 +23,7 @@ export default function SetConfigScreen(props) {
   const [loading, setIsLoading] = useState(true)
 
   const loadData = () => {
-    fetch('http://10.43.216.33:5000/get', {
+    fetch('http://10.0.0.179:5000/get', {
       method:'GET'
     })
     .then(resp => resp.json())

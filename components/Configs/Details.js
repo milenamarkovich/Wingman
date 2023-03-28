@@ -8,8 +8,12 @@ function Details(props) {
 
     const data = props.route.params.data;
 
+    const clickedItem = () => {
+        props.navigation.navigate('SetsScreen')
+      }
+
     const deleteData = (data) => {
-        fetch(`http://10.43.216.33:5000/delete/${data.id}/`, {
+        fetch(`http://10.0.0.179:5000/delete/${data.id}/`, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',
@@ -24,8 +28,17 @@ function Details(props) {
 
     return(
         <ScrollView>
-            <View style={styles.viewStyle}>
+            <View style={styles.viewStyle} >
+                
                 <Text style={styles.titleStyle}>
+                    <Button
+                        style = {{marginLeft:0, padding: 0, backgroundColor: '#F7F8F8', alignItems: 'left'}}
+                        labelStyle = {{color: '#FAC623', fontSize: 25, alignSelf: 'flex-start'}}
+                        icon = "arrow-left"
+                        mode = "contained"
+                        title = "Back"
+                        onPress = {() => clickedItem()}
+                    />
                     {data.title}
                 </Text>
                 
@@ -34,14 +47,14 @@ function Details(props) {
                 <Text style={styles.bodyStyle}>Peak Height: {data.delta_y}</Text>
                 <View style={{alignSelf: 'center', marginTop: 40, flexDirection: 'row', justifyContent: 'space-around', margin: 15, padding: 10}}>
                 <Button 
-                    style = {{margin:10}}
+                    style = {{margin:10, backgroundColor: '#FAC623'}}
                     icon = "update"
                     mode = "contained"
                     onPress = {() => props.navigation.navigate('Edit', {data: data})}
                     title = "Update"
                     > Update </Button>
                 <Button 
-                    style = {{margin:10}}
+                    style = {{margin:10, backgroundColor: '#FAC623'}}
                     icon = "delete"
                     mode = "contained"
                     onPress = {() => deleteData(data)}
@@ -56,9 +69,11 @@ function Details(props) {
 const styles = StyleSheet.create({
     viewStyle: {
         padding: 10,
-        margin: 10
+        margin: 10,
+        backgroundColor: '#F7F8F8'
     },
     titleStyle: {
+        flexDirection: 'column',
         fontSize: 40,
         marginBottom: 20
     },

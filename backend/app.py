@@ -94,7 +94,11 @@ def launch(id):
     #config = config_schema.jsonify(Configurations.query.get(id))
     #print("config: ", config)
 
-    # Create a TCP/IP socket
+    response = requests.get("http://10.0.0.224:5001/launch/" + str(id))
+    
+    return config_schema.jsonify(response)
+
+    '''# Create a TCP/IP socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Bind the socket to the port
@@ -135,7 +139,7 @@ def launch(id):
             # Clean up the connection
             print("Closing current connection")
             connection.close()
-            s.close()
+            s.close()'''
     
     
 if __name__ == "__main__":

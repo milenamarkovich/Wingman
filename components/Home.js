@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   StatusBar,
 } from 'react-native';
 import {Button} from 'react-native-paper';
@@ -18,7 +19,7 @@ export default function HomeScreen(props) {
   const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
-    fetch('http://10.43.216.33:5000/get', {
+    fetch('http://10.0.0.179:5000/get', {
       method:'GET'
     })
     .then(resp => resp.json())
@@ -37,7 +38,7 @@ export default function HomeScreen(props) {
   },[]);
 
   const getConfig = (selected) => {
-    fetch(`http://10.43.216.33:5000/get/${selected.value}`, {
+    fetch(`http://10.0.0.179:5000/get/${selected.value}`, {
       method:'GET'
     })
     .then(resp => resp.json())
@@ -48,7 +49,7 @@ export default function HomeScreen(props) {
   }
 
   const launchConfig = (data) => {
-    fetch(`http://10.43.216.33:5000/launch/${data.id}/`, {
+    fetch(`http://10.0.0.179:5000/launch/${data.id}/`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset="utf-8"'
@@ -56,9 +57,6 @@ export default function HomeScreen(props) {
     })
     .then(data => {
       setLaunchState(1)
-      console.log("Launched? ", launched)
-      console.log("Config: ", data)
-      console.log("id_launch: ", data.id)
     })
     .catch(error => console.log(error) )
   }
@@ -71,7 +69,7 @@ export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
-      <View style={{backgroundColor: '#fff', padding: 20, borderRadius: 15}}>
+      <ScrollView style={{backgroundColor: '#fff', padding: 20, borderRadius: 15}}>
       {!!selected && (
         <Text>
           Selected: label = {selected.label} and value = {selected.value}
@@ -96,9 +94,9 @@ export default function HomeScreen(props) {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}            
         />
-      </View>
+      </ScrollView>
       <Button 
-        style = {{margin:10}}
+        style = {{margin:10, backgroundColor: '#FAC623'}}
         icon = "launch"
         mode = "contained"
         onPress = {() => clickedItem(data)}
@@ -122,6 +120,8 @@ export default function HomeScreen(props) {
       borderRadius: 8,
       paddingHorizontal: 8,
       marginBottom: 10,
+      justifyContent: 'center',
+      alignContent: 'center'
     },
     icon: {
       marginRight: 5,
