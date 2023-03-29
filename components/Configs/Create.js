@@ -3,16 +3,19 @@ import {View, Text, StyleSheet} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {TextInput, Button} from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function Create(props) {
 
     const [title, setTitle] = useState("");
-    const [yaw, setYaw] = useState("");
-    const [delta_x, setDeltaX] = useState("");
-    const [delta_y, setDeltaY] = useState(""); 
+    const [selected, setSelected] = useState([]);
+    const [yaw, setYaw] = useState([]);
+    const [delta_x, setDeltaX] = useState([]);
+    const [delta_y, setDeltaY] = useState([]); 
+    const [isFocus, setIsFocus] = useState(false);
 
     const insertData = (props) => {
-      fetch("http://10.0.0.179:5000/add", {
+      fetch("http://10.43.56.82:5000/add", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -34,50 +37,66 @@ function Create(props) {
 
     return (
         <View style={styles.container}>
+          <View style={{flexDirection: 'row', backgroundColor: 'white', padding: 16, borderRadius: 5}}>
+            <Button
+                style = {{margin:0, padding: 0, backgroundColor: 'white', alignItems: 'left'}}
+                labelStyle = {{color: '#FAC623', fontSize: 25, alignSelf: 'flex-start'}}
+                icon = "arrow-left"
+                mode = "contained"
+                title = "Back"
+                onPress = {() => props.navigation.navigate('SetsScreen')}
+            />
 
-          <Text>Please Enter Your New Configuration Details</Text>
+          <Text style={{flex: 1, fontSize: 18}}>Please Enter Your New Configuration Details Below ...</Text>
+          </View>
 
-          <TextInput style = {styles.inputStyle}
-          label = "Name of Configuration"
-          value = {title}
-          mode = "outlined"
-          onChangeText = {text => setTitle(text)}
-          />
+          <ScrollView>
+            <TextInput style = {styles.inputStyle}
+            label = "Name of Configuration"
+            value = {title}
+            onChangeText = {text => setTitle(text)}
+            />
 
-          <TextInput style = {styles.inputStyle}
-          label = "Please Enter Yaw"
-          value = {yaw}
-          mode = "outlined"
-          onChangeText = {text => setYaw(text)}
-          />
+            <TextInput style = {styles.inputStyle}
+            label = "Please Enter Yaw"
+            value = {yaw}
+            onChangeText = {text => setYaw(text)}
+            />
 
-          <TextInput style = {styles.inputStyle}
-          label = "Please Enter Horizontal Displacement"
-          value = {delta_x}
-          mode = "outlined"
-          onChangeText = {text => setDeltaX(text)}
-          />
+            <TextInput style = {styles.inputStyle}
+            label = "Please Enter Horizontal Displacement"
+            value = {delta_x}
+            onChangeText = {text => setDeltaX(text)}
+            />
 
-          <TextInput style = {styles.inputStyle}
-          label = "Please Enter Vertical Displacement"
-          value = {delta_y}
-          mode = "outlined"
-          onChangeText = {text => setDeltaY(text)}
-          />
+            <TextInput style = {styles.inputStyle}
+            label = "Please Enter Vertical Displacement"
+            value = {delta_y}
+            onChangeText = {text => setDeltaY(text)}
+            />
+          </ScrollView>
 
-          {/*<Dropdown
-          style={styles.dropdown}
-          iconStyle={styles.iconStyle}
-          data={yaw_list}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Yaw Axis (deg)'
-          value={yaw}
-          onSelectItem={(item) => {
-            console.log(item);
-          }}
-          />
+          {/*<ScrollView style={{backgroundColor: '#fff', padding: 20, borderRadius: 15}}>
+            <Dropdown 
+              label="Select Item" 
+              data={configData} 
+              onChange = {setSelected}
+              style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus ? 'Select Configuration' : '...'}
+              searchPlaceholder="Search..."
+              value={configData}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}            
+              />
+            </ScrollView>
 
           <Dropdown
           style={styles.dropdown}
@@ -109,7 +128,7 @@ function Create(props) {
           onChangeText={text => setDeltaY(text)}
     />*/}
           <Button 
-          style = {{margin:10}}
+          style = {{margin:10, backgroundColor: '#FAC623'}}
           icon = "pencil"
           mode = "contained"
           onPress = {() => insertData(props)}
@@ -122,12 +141,13 @@ export default Create;
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: 'white',
+      backgroundColor: '#F7F8F8',
       padding: 16,
+      flex: 1
     },
     dropdown: {
       height: 50,
-      borderColor: 'gray',
+      borderColor: 'white',
       borderWidth: 0.5,
       borderRadius: 8,
       paddingHorizontal: 8,
@@ -161,7 +181,12 @@ const styles = StyleSheet.create({
     inputStyle: {
       padding: 12,
       paddingHorizontal: 0,
-      marginTop: 20,
+      marginTop: 10,
       marginBottom: 10,
+      backgroundColor: 'white',
+      borderRadius: 5,
+      underlineColorAndroid: "transparent"
     }
   });
+
+  

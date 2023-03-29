@@ -8,12 +8,8 @@ function Details(props) {
 
     const data = props.route.params.data;
 
-    const clickedItem = () => {
-        props.navigation.navigate('SetsScreen')
-      }
-
     const deleteData = (data) => {
-        fetch(`http://10.0.0.179:5000/delete/${data.id}/`, {
+        fetch(`http://10.43.56.82:5000/delete/${data.id}/`, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',
@@ -37,7 +33,7 @@ function Details(props) {
                         icon = "arrow-left"
                         mode = "contained"
                         title = "Back"
-                        onPress = {() => clickedItem()}
+                        onPress = {() => props.navigation.navigate('SetsScreen')}
                     />
                     {data.title}
                 </Text>

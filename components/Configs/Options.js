@@ -1,45 +1,45 @@
 const yaw_list = [
-    {
-      label: "0",
-      value: '0',
-    },
-    {
-      label: "15",
-      value: '15',
-    },
-    {
-      label: "30",
-      value: '30',
-    },
-    {
-      label: "45",
-      value: '45',
-    },
-    {
-      label: "60",
-      value: '60',
-    },
-    {
-      label: "75",
-      value: '75',
-    },
-    {
-      label: "90",
-      value: '90',
-    },
-    {
-      label: "105",
-      value: '105',
-    },
-    {
-      label: "120",
-      value: '120',
-    },
-    {
-      label: "135",
-      value: '135',
-    },
-  ];
+  {
+    label: "0",
+    value: "0",
+  },
+  {
+    label: "15",
+    value: "15",
+  },
+  {
+    label: "30",
+    value: "30",
+  },
+  {
+    label: "45",
+    value: "45",
+  },
+  {
+    label: "60",
+    value: "60",
+  },
+  {
+    label: "75",
+    value: "75",
+  },
+  {
+    label: "90",
+    value: "90",
+  },
+  {
+    label: "105",
+    value: "105",
+  },
+  {
+    label: "120",
+    value: "120",
+  },
+  {
+    label: "135",
+    value: "135",
+  },
+];
 
   const delta_x_list = [
     {

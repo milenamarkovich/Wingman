@@ -94,7 +94,7 @@ def launch(id):
     #config = config_schema.jsonify(Configurations.query.get(id))
     #print("config: ", config)
 
-    response = requests.get("http://10.0.0.224:5001/launch/" + str(id))
+    response = requests.get("http://10.43.70.75:5001/launch/" + str(id))
     
     return config_schema.jsonify(response)
 

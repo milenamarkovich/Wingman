@@ -10,7 +10,9 @@ import {
 
 export default StyleSheet.create({
     container: {
+        backgroundColor: 'white',
         flex: 1,
+        margin: 5
     },
 
     button: {
@@ -21,7 +23,9 @@ export default StyleSheet.create({
     cardStyle: {
         backgroundColor: '#F7F8F8',
         margin: 10,
-        padding: 10
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     fab: {
         position: 'absolute',

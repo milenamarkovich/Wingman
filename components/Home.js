@@ -5,10 +5,14 @@ import {
   View,
   ScrollView,
   StatusBar,
+  Alert,
+  Modal,
+  Pressable
 } from 'react-native';
 import {Button} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
-import e from 'cors';
+import Court from '../svg/court.svg';
+import Launch from '../svg/launched.svg';
 
 export default function HomeScreen(props) {
 
@@ -17,9 +21,10 @@ export default function HomeScreen(props) {
   const [launched, setLaunchState] = useState(0);
   const [configData, setConfigData] = useState([]);
   const [isFocus, setIsFocus] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    fetch('http://10.0.0.179:5000/get', {
+    fetch('http://10.43.56.82:5000/get', {
       method:'GET'
     })
     .then(resp => resp.json())
@@ -38,7 +43,7 @@ export default function HomeScreen(props) {
   },[]);
 
   const getConfig = (selected) => {
-    fetch(`http://10.0.0.179:5000/get/${selected.value}`, {
+    fetch(`http://10.43.56.82:5000/get/${selected.value}`, {
       method:'GET'
     })
     .then(resp => resp.json())
@@ -49,7 +54,7 @@ export default function HomeScreen(props) {
   }
 
   const launchConfig = (data) => {
-    fetch(`http://10.0.0.179:5000/launch/${data.id}/`, {
+    fetch(`http://10.43.56.82:5000/launch/${data.id}/`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset="utf-8"'
@@ -62,19 +67,41 @@ export default function HomeScreen(props) {
   }
 
   const clickedItem = (data) => {
+    setModalVisible(true);
     getConfig(selected);
     launchConfig(data);
   }
 
   return (
     <View style={styles.container}>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Launch width="90%" height="68%"/>
+            <Text style={styles.congrats}>Congratulations, Your Setting Configuration Has Succesfully Launched!</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={{margin: 20, fontSize: 20, borderRadius: 20, color: 'white', fontWeight: 'bold'}}>Back To Home</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={styles.name_container}>
+      <Text style={styles.welcome}>Welcome Back,</Text>
+      <Text style={styles.name}>Jane Doe</Text>
+      </View>
       <StatusBar barStyle="light-content" />
       <ScrollView style={{backgroundColor: '#fff', padding: 20, borderRadius: 15}}>
-      {!!selected && (
-        <Text>
-          Selected: label = {selected.label} and value = {selected.value}
-        </Text>
-      )}
       <Dropdown 
         label="Select Item" 
         data={configData} 
@@ -94,9 +121,10 @@ export default function HomeScreen(props) {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}            
         />
+        <Court width={300} height={250} />
       </ScrollView>
       <Button 
-        style = {{margin:10, backgroundColor: '#FAC623'}}
+        style = {[styles.button, styles.buttonOpen]}
         icon = "launch"
         mode = "contained"
         onPress = {() => clickedItem(data)}
@@ -107,9 +135,49 @@ export default function HomeScreen(props) {
   }
 
   const styles = StyleSheet.create({
+    modalView: {
+      margin: 20,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+    button: {
+      backgroundColor: '#FAC623',
+      borderRadius: 20,
+      margin: 10,
+      elevation: 2,
+    },
+    buttonOpen: {
+      backgroundColor: '#FAC623',
+    },
+    buttonClose: {
+      backgroundColor: '#9ABBCE',
+      borderRadius: 20,
+      margin: 10,
+      elevation: 2
+    },
     container: {
       flex: 1,
       padding: 16,
+      justifyContent: 'center',
+      alignContent: 'center',
+    },
+    name_container: {
+      padding: 16,
+      marginBottom: 20,
       justifyContent: 'center',
       alignContent: 'center',
     },
@@ -119,7 +187,7 @@ export default function HomeScreen(props) {
       borderWidth: 0.5,
       borderRadius: 8,
       paddingHorizontal: 8,
-      marginBottom: 10,
+      marginBottom: 30,
       justifyContent: 'center',
       alignContent: 'center'
     },
@@ -149,4 +217,20 @@ export default function HomeScreen(props) {
       height: 40,
       fontSize: 16,
     },
+    name: {
+      fontSize: 50,
+      fontWeight: 'bold',
+      color: '#7EA8BB'
+    },
+    welcome: {
+      fontSize: 20,
+      color: '#ADA4A5'
+    },
+    congrats: {
+      fontSize: 20,
+      color: '#ADA4A5',
+      marginBottom: 20,
+      alignSelf: 'center',
+      fontWeight: 'bold'
+    }
   });
