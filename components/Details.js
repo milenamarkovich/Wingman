@@ -9,7 +9,7 @@ function Details(props) {
     const data = props.route.params.data;
 
     const deleteData = (data) => {
-        fetch(`http://10.43.56.82:5000/delete/${data.id}/`, {
+        fetch(`http://192.168.0.101:5000/delete/${data.id}/`, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',
@@ -24,23 +24,24 @@ function Details(props) {
 
     return(
         <ScrollView>
+            <Button
+                style = {{backgroundColor: '#F2F2F2', alignItems: 'left', marginTop: 10}}
+                labelStyle = {{color: '#FAC623', fontSize: 40}}
+                icon = "arrow-left"
+                mode = "contained"
+                title = "Back"
+                onPress = {() => props.navigation.goBack()}
+            ></Button>
             <View style={styles.viewStyle} >
                 
-                <Text style={styles.titleStyle}>
-                    <Button
-                        style = {{marginLeft:0, padding: 0, backgroundColor: '#F7F8F8', alignItems: 'left'}}
-                        labelStyle = {{color: '#FAC623', fontSize: 25, alignSelf: 'flex-start'}}
-                        icon = "arrow-left"
-                        mode = "contained"
-                        title = "Back"
-                        onPress = {() => props.navigation.navigate('SetsScreen')}
-                    />
-                    {data.title}
-                </Text>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleStyle}>{data.title}</Text>
+                </View>
                 
-                <Text style={styles.bodyStyle}>Yaw Angle: {data.yaw}</Text>
-                <Text style={styles.bodyStyle}>Max. Horizontal Displacement: {data.delta_x}</Text>
-                <Text style={styles.bodyStyle}>Peak Height: {data.delta_y}</Text>
+                <Text style={styles.bodyStyle}>Pitch Angle: {data.pitch}</Text>
+                <Text style={styles.bodyStyle}>X: {data.x}</Text>
+                <Text style={styles.bodyStyle}>Y: {data.y}</Text>
+                <Text style={styles.bodyStyle}>Z: {data.z}</Text>
                 <View style={{alignSelf: 'center', marginTop: 40, flexDirection: 'row', justifyContent: 'space-around', margin: 15, padding: 10}}>
                 <Button 
                     style = {{margin:10, backgroundColor: '#FAC623'}}
@@ -64,13 +65,18 @@ function Details(props) {
 
 const styles = StyleSheet.create({
     viewStyle: {
-        padding: 10,
+        padding: 16,
         margin: 10,
         backgroundColor: '#F7F8F8'
     },
     titleStyle: {
         flexDirection: 'column',
+        flex: 1,
         fontSize: 40,
+    },
+    titleContainer: {
+        flexDirection: 'column',
+        flex: 1,
         marginBottom: 20
     },
     bodyStyle: {

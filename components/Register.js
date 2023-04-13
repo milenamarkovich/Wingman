@@ -11,10 +11,10 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function SequencesScreen() {
+export default function RegisterScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Sequences</Text>
+      <Text>Players</Text>
     </View>
   );
 }

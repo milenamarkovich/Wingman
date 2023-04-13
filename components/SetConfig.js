@@ -12,19 +12,20 @@ import {
 import { Card, FAB, IconButton, Colors } from 'react-native-paper';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import styles from '../styles/styles';
-import Create from './Configs/Create';
+import Create from './Create';
 import { createStackNavigator } from '@react-navigation/stack';
 import { List } from 'react-native-feather';
+import Volleyball from '../svg/volleyball.svg';
 
 export default function SetConfigScreen(props) {
   
   const navigationRef = useNavigationContainerRef();
 
-  const [data, setData] = useState([])
-  const [loading, setIsLoading] = useState(true)
+  const [data, setData] = useState([]);
+  const [loading, setIsLoading] = useState(true);
 
   const loadData = () => {
-    fetch('http://10.43.56.82:5000/get', {
+    fetch('http://192.168.0.101:5000/get', {
       method:'GET'
     })
     .then(resp => resp.json())
@@ -54,8 +55,8 @@ export default function SetConfigScreen(props) {
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center'}}>
-          <IconButton icon='volleyball' size={40} color='white' style={{margin: 0, backgroundColor:'#9ABBCE', color: 'white'}} />
-          <Text style={{fontSize: 20, paddingLeft: 20}}>{item.title}</Text>
+          <Volleyball width={30} height={30}/>
+          <Text style={{fontSize: 20, marginHorizontal: 10}}>{item.title}</Text>
         </View>
       </Card>
     )

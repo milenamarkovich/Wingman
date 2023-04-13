@@ -17,20 +17,22 @@ ma = Marshmallow(app)
 
 class Configurations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    yaw = db.Column(db.types.Float(precision=1,asdecimal=True))
-    delta_x = db.Column(db.types.Float(precision=1,asdecimal=True))
-    delta_y = db.Column(db.types.Float(precision=1,asdecimal=True))
+    x = db.Column(db.types.Float(precision=1,asdecimal=True))
+    y = db.Column(db.types.Float(precision=1,asdecimal=True))
+    z = db.Column(db.types.Float(precision=1,asdecimal=True))
+    pitch = db.Column(db.types.Float(precision=1,asdecimal=True))
     title = db.Column(db.String(100))
 
-    def __init__(self, yaw, delta_x, delta_y, title):
+    def __init__(self, x, y, z, pitch, title):
         self.title = title
-        self.yaw = yaw
-        self.delta_x = delta_x
-        self.delta_y = delta_y
+        self.x = x
+        self.y = y
+        self.z = z
+        self.pitch = pitch
 
 class ConfigurationSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'yaw', 'delta_x', 'delta_y')
+        fields = ('id', 'title', 'x', 'y', 'z', 'pitch')
 
 config_schema = ConfigurationSchema()
 configs_schema = ConfigurationSchema(many=True)
@@ -49,11 +51,12 @@ def post_details(id):
 @app.route('/add', methods = ['POST'])
 def add_config():
     title = request.json['title']
-    yaw = request.json['yaw']
-    delta_x = request.json['delta_x']
-    delta_y = request.json['delta_y']
+    x = request.json['x']
+    y = request.json['y']
+    z = request.json['z']
+    pitch = request.json['pitch']
 
-    config = Configurations(yaw, delta_x, delta_y, title)
+    config = Configurations(x, y, z, pitch, title)
     
     db.session.add(config)
     db.session.commit()
@@ -68,14 +71,16 @@ def update_config(id):
     config = Configurations.query.get(id)
 
     title = request.json['title']
-    yaw = request.json['yaw']
-    delta_x = request.json['delta_x']
-    delta_y = request.json['delta_y']
+    x = request.json['x']
+    y = request.json['y']
+    z = request.json['z']
+    pitch = request.json['pitch']
 
     config.title = title
-    config.yaw = yaw
-    config.delta_x = delta_x
-    config.delta_y = delta_y
+    config.x = x
+    config.y = y
+    config.z = z
+    config.pitch = pitch
 
     db.session.commit()
     return config_schema.jsonify(config)
@@ -88,13 +93,14 @@ def config_delete(id):
 
     return config_schema.jsonify(config)
 
-@app.route('/launch/<id>/', methods = ['GET'])
-def launch(id):
+@app.route('/launch/<id>/<num_launch>', methods = ['GET'])
+def launch(id, num_launch):
     #--------------USE CLIENT_TEST.PY IN RPI CODE----------------#
     #config = config_schema.jsonify(Configurations.query.get(id))
     #print("config: ", config)
 
-    response = requests.get("http://10.43.70.75:5001/launch/" + str(id))
+    #response = requests.get("http://10.43.70.75:5001/launch/" + str(id))
+    response = requests.get("http://192.168.0.100:5001/launch/" + str(id) + '/' + str(num_launch))
     
     return config_schema.jsonify(response)
 

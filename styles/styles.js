@@ -10,11 +10,16 @@ import {
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#F7F8F8',
         flex: 1,
-        margin: 5
+        margin: 5,
+        padding: 10,
     },
-
+    cardContainer: {
+        flex: 1,
+        margin: 5,
+        padding: 10,
+    },
     button: {
         paddingTop: 20,
         backgroundColor: '#FAC623'
